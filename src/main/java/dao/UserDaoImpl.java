@@ -9,6 +9,7 @@ import org.hibernate.Transaction;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import java.util.List;
+import java.util.Optional;
 
 public class UserDaoImpl implements UserDao {
     private static volatile UserDaoImpl instance = null;
@@ -33,13 +34,14 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public void deleteUser(Long id) {
+    public Optional<User> deleteUser(Long id) {
         Session session = this.sessionFactory.openSession();
         Transaction transaction = session.beginTransaction();
         User user = session.get(User.class, id);
         session.delete(user);
         transaction.commit();
         session.close();
+        return null;
     }
 
     @Override

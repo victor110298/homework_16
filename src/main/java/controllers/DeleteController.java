@@ -10,20 +10,20 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.util.Objects;
+import java.util.Optional;
 
 @WebServlet("/delete")
 public class DeleteController extends HttpServlet {
+    private UserDao dao=UserDaoImpl.getInstance();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        String userId = request.getParameter("id");
-        if (Objects.equals(userId, null)) {
+        Long targetId =Long.parseLong(request.getParameter("id"));
+        Optional<User> user=dao.deleteUser(targetId);
+        if (!user.isPresent()) {
             request.getRequestDispatcher("/list").forward(request, response);
         }
         else {
-            Long id = Long.parseLong(userId);
-            UserDao dao = UserDaoImpl.getInstance();
-            dao.deleteUser(id);
             response.sendRedirect(request.getContextPath() + "/list");
         }
     }

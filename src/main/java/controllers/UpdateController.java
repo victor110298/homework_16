@@ -14,6 +14,8 @@ import java.util.Objects;
 
 @WebServlet("/update")
 public class UpdateController extends HttpServlet {
+    private UserDao dao = UserDaoImpl.getInstance();
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
         String userId = request.getParameter("id");
@@ -21,7 +23,6 @@ public class UpdateController extends HttpServlet {
             request.getRequestDispatcher("/list").forward(request, response);
         else {
             Long id = Long.parseLong(userId);
-            UserDao dao = UserDaoImpl.getInstance();
             User user = dao.findUserById(id);
             request.setAttribute("user", user);
             request.getRequestDispatcher("/list").forward(request, response);
