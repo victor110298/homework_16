@@ -45,11 +45,11 @@ public class UserDaoImpl implements UserDao {
     }
 
     @Override
-    public User findUserById(Long id) {
+    public Optional<User> findUserById(Long id) {
         Session session = this.sessionFactory.openSession();
         User user = session.get(User.class, id);
         session.close();
-        return user;
+        return Optional.ofNullable(user);
     }
 
     @Override

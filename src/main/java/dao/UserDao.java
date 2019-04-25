@@ -12,7 +12,7 @@ public interface UserDao {
 
     Optional<User> deleteUser(Long id);
 
-    User findUserById(Long id);
+    Optional<User> findUserById(Long id);
 
     List<User> getAllUsers();
 }
